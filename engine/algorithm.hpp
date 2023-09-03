@@ -13,7 +13,8 @@
 
 namespace engine 
 {
-constexpr uint8_t word_size{5};
+static constexpr uint8_t word_size{5};
+static const uint32_t thread_num{std::thread::hardware_concurrency()};
 enum output_status 
 { 
     correct_pos = 0, 
@@ -68,38 +69,16 @@ public:
         return output;
     }
 
-    static void timer(
-        const std::chrono::high_resolution_clock::time_point & start, 
-        std::chrono::high_resolution_clock::time_point & timestamp,
-        uint32_t current_index, 
-        uint32_t data_size)
-    {
-        auto now = std::chrono::high_resolution_clock::now();
-        if (std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count() > 100)
-        {
-            timestamp = now;
-            std::stringstream progress;
-            progress << std::fixed << std::setprecision(2) << 100 * (static_cast<float>(current_index) / data_size);
-            std::string progress_str = " [" + std::string(6 - progress.str().size(), ' ') + progress.str() + "%] ";
-            auto eta = std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count() * (data_size - current_index) / current_index;
-            auto time = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::milliseconds(eta)).count();
-            std::cout << progress_str << "[ETA: " << time << "s]\n\x1b[A";
-        }
-    }
-
     virtual void validate_algorithm();
-    virtual std::string func(
+    virtual void validate_algorithm_multithreaded();
+    virtual std::string sol_function(
         std::vector<std::string> & ans_list,
         std::vector<std::array<uint8_t, word_size>> & ans_info,
         std::vector<std::string> possible_ans) = 0;
 
-protected:
-    std::vector<std::string> data;
-    uint32_t thread_num{std::thread::hardware_concurrency() - 1};
-
 private:
     std::string output_path{};
-
+    std::vector<std::string> data;
 };
 } // namespace engine
 

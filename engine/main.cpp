@@ -6,5 +6,6 @@
 int main() {
     engine::RandomAccess ra_instance("valid_solutions.csv", "random_access.csv");
     ra_instance.validate_algorithm();
+    ra_instance.validate_algorithm_multithreaded();
     return 0;
 }

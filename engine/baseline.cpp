@@ -2,7 +2,7 @@
 
 namespace engine
 {
-    std::string RandomAccess::func(
+    std::string RandomAccess::sol_function(
         std::vector<std::string> & ans_list,
         std::vector<std::array<uint8_t, word_size>> & ans_info,
         std::vector<std::string> possible_ans) 
