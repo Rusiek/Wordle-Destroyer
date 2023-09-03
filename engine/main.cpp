@@ -1,15 +1,10 @@
 #include "algorithm.hpp"
+#include "baseline.hpp"
 #include <string>
 #include <iostream>
 
 int main() {
-    engine::Algorithm a;
-    for (auto x : engine::Algorithm::validate_ans("aabaa", "ababa")) {
-        std::cout << static_cast<int>(x);
-    }
-    std::cout << std::endl;
-    for (auto x : engine::Algorithm::validate_ans("aabad", "ababa")) {
-        std::cout << static_cast<int>(x);
-    }
+    engine::RandomAccess ra_instance("valid_solutions.csv", "random_access.csv");
+    ra_instance.validate_algorithm();
     return 0;
 }
