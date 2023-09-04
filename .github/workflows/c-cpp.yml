@@ -7,7 +7,15 @@ on:
     branches: [ "master" ]
 
 jobs:
+  check-format:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: 
+      run: git diff --name-only ${{ github.base_ref }}...${{ github.head_ref }} | grep -E '\.(cpp|hpp)$' | xargs clang-format -i -style=file && git diff --exit-code
+
   build:
+    needs: check-format
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
