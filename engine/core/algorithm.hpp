@@ -74,7 +74,7 @@ public:
     virtual std::string sol_function(
         std::vector<std::string> & ans_list,
         std::vector<std::array<uint8_t, word_size>> & ans_info,
-        std::vector<std::string> possible_ans) = 0;
+        std::vector<std::string> & possible_ans) = 0;
 
 private:
     std::string output_path{};

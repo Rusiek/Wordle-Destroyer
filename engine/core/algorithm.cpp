@@ -12,6 +12,17 @@
 namespace engine 
 {
 
+using namespace indicators;
+
+std::string build_path(std::string path, bool multithreaded = false, uint32_t thread_num = 0)
+{
+    if (multithreaded)
+    {
+        return path + "/multithreaded/data_" + std::string(2 - std::to_string(thread_num).size(), '0') + std::to_string(thread_num) + ".csv";
+    }
+    return path + "/singlethreaded/data.csv";
+}
+
 Base::Base(std::string input_path, std::string output_path) 
 {
     try 
@@ -33,7 +44,6 @@ Base::Base(std::string input_path, std::string output_path)
     std::string line;
     while (std::getline(file, line)) 
     {
-        line.pop_back();
         this->data.push_back(line);
     }
     file.close();
@@ -43,9 +53,8 @@ Base::Base(std::string input_path, std::string output_path)
 
 void Base::validate_algorithm() 
 {
-    using namespace indicators;
-
-    std::ofstream file(output_path, std::ios::out);
+    std::string path = build_path(output_path);
+    std::ofstream file(path, std::ios::out);
     file << "word,guesses" << std::endl;
     file.close();
     auto progress = 0.0f;
@@ -79,11 +88,11 @@ void Base::validate_algorithm()
             ++guesses_num;
             auto guess = this->sol_function(ans_list, ans_info, possible_ans);
             ans_list.push_back(guess);
-            ans_info.push_back(validate_ans(guess, possible_ans.at(index)));
-            if (guess == possible_ans.at(index)) 
+            ans_info.push_back(validate_ans(guess, data.at(index)));
+            if (guess == data.at(index)) 
             {
-                std::ofstream file(output_path, std::ios::app);
-                file << possible_ans.at(index) << "," << guesses_num << std::endl;
+                std::ofstream file(path, std::ios::app);
+                file << data.at(index) << "," << guesses_num << std::endl;
                 file.close();
                 break;
             }
@@ -95,10 +104,14 @@ void Base::validate_algorithm()
 
 void Base::validate_algorithm_multithreaded() 
 {
-    using namespace indicators;
-    std::ofstream file(output_path, std::ios::out);
-    file << "word,guesses" << std::endl;
-    file.close();
+    std::vector<std::string> paths;
+    for (uint32_t index = 0; index < thread_num; ++index)
+    {
+        paths.push_back(build_path(output_path, true, index + 1));
+        std::ofstream file(paths.at(index), std::ios::out);
+        file << "word,guesses" << std::endl;
+        file.close();
+    }
     
     show_console_cursor(false);
     std::vector<ProgressBar> bars_array;
@@ -215,11 +228,11 @@ void Base::validate_algorithm_multithreaded()
     };
 
     auto data_cp = data;
-    auto path_cp = output_path;
+    auto thread_num_cp = thread_num;
     auto func_cp = [this](
         std::vector<std::string> & ans_list,
         std::vector<std::array<uint8_t, word_size>> & ans_info,
-        std::vector<std::string> possible_ans) -> std::string
+        std::vector<std::string> & possible_ans) -> std::string
     {
         return sol_function(ans_list, ans_info, possible_ans);
     };
@@ -227,15 +240,15 @@ void Base::validate_algorithm_multithreaded()
     DynamicProgress<ProgressBar> bars(bar1, bar2, bar3, bar4, bar5, bar6, bar7, bar8);
 
     std::vector<std::thread> jobs;
-    for (uint32_t thread = 0; thread < 8; ++thread)
+    for (uint32_t thread = 0; thread < thread_num; ++thread)
     {
-        auto job = [&bars, &data_cp, thread, &path_cp, &func_cp]()
+        auto job = [&bars, data_cp, thread, thread_num_cp, &paths, func_cp]()
         {
-            const int thread_local_id{thread};
             const uint32_t data_size{data_cp.size()};
+            const std::string thread_str = std::to_string(thread + 1);
             
             auto progress = 0.0f;
-            for (uint32_t index = thread; index < data_size; index += 8)
+            for (uint32_t index = thread; index < data_size; index += thread_num_cp)
             {
                 progress = 100.0f * index / data_size;
                 bars[thread].set_progress(progress);
@@ -244,17 +257,17 @@ void Base::validate_algorithm_multithreaded()
                 std::vector<std::string> ans_list;
                 std::vector<std::array<uint8_t, word_size>> ans_info;
                 std::vector<std::string> possible_ans(data_cp);
-
+                
                 while (true) 
                 {
                     ++guesses_num;
                     std::string guess = func_cp(ans_list, ans_info, possible_ans);
                     ans_list.push_back(guess);
-                    ans_info.push_back(validate_ans(guess, possible_ans.at(index)));
-                    if (guess == possible_ans.at(index)) 
+                    ans_info.push_back(validate_ans(guess, data_cp.at(index)));
+                    if (guess == data_cp.at(index)) 
                     {
-                        std::ofstream file(path_cp, std::ios::app);
-                        file << possible_ans.at(index) << "," << guesses_num << std::endl;
+                        std::ofstream file(paths.at(thread), std::ios::app);
+                        file << data_cp.at(index) << "," << guesses_num << std::endl;
                         file.close();
                         break;
                     }
