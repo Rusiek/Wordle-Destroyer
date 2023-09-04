@@ -68,7 +68,7 @@ public:
     }
 
     virtual void validate_algorithm();
-    virtual void validate_algorithm_multithreaded();
+    // virtual void validate_algorithm_multithreaded();
     virtual std::string sol_function(
         std::vector<std::string> & ans_list,
         std::vector<std::array<uint8_t, word_size>> & ans_info,

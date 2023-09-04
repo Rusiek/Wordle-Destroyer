@@ -1,12 +1,12 @@
 #pragma once
-#include "../core/algorithm.hpp"
+#include "algorithm.hpp"
 
 namespace engine
 {
-class RandomAccess : public Base
+class Baseline : public Base
 {
 public:
-    RandomAccess(std::string input_path, std::string output_path) : Base(input_path, output_path) {}
+    Baseline(std::string input_path, std::string output_path) : Base(input_path, output_path) {}
 
     virtual std::string sol_function(
         std::vector<std::string> & ans_list,

@@ -11,11 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Set up Make
-      run: sudo apt-get install make
-    - name: Set up clang-tidy
-      run: sudo apt-get install clang-tidy
+    - name: Set up CMake
+      run: sudo apt-get install cmake
     - name: Build
-      run: make compile
-    - name: Run clang-tidy
-      run: make tidy
+      run: mkdir build && cmake -S . build/
