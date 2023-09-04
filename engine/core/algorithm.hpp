@@ -1,11 +1,9 @@
 #pragma once
 #include <algorithm>
 #include <array>
-#include <chrono>
 #include <cstdint>
 #include <iomanip>
 #include <iostream>
-#include <set>
 #include <sstream>
 #include <string>
 #include <thread>
@@ -14,7 +12,7 @@
 namespace engine 
 {
 static constexpr uint8_t word_size{5};
-static const uint32_t thread_num{std::thread::hardware_concurrency()};
+static const uint32_t thread_num{std::thread::hardware_concurrency() - 1};
 enum output_status 
 { 
     correct_pos = 0, 
