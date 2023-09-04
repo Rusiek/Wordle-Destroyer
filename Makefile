@@ -1,5 +1,8 @@
 compile:
-	cd engine && g++ -std=c++11 -o validator -O3 main.cpp core/algorithm.cpp randomAccess/randomAccess.cpp -pthread -Wall -Wextra -Wpedantic
+	cd engine && g++ -std=c++11 -o validator -O3 main.cpp core/algorithm.cpp randomAccess/randomAccess.cpp baseline/baseline.cpp -pthread -Wall -Wextra -Wpedantic
+
+debug:
+	cd engine && g++ -g -std=c++11 -o validator -O0 main.cpp core/algorithm.cpp randomAccess/randomAccess.cpp baseline/baseline.cpp -pthread -Wall -Wextra -Wpedantic
 
 run:
 	cd engine && ./validator
