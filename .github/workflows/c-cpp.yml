@@ -1,17 +1,21 @@
 name: C/C++ CI
 
 on:
-    push:
-        branches: [ "master" ]
-    pull_request:
-        branches: [ "master" ]
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-        - uses: actions/checkout@v3
-        - name: Set up Make
-          run: sudo apt-get install make
-        - name: Build
-          run: make compile
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Make
+      run: sudo apt-get install make
+    - name: Set up clang-tidy
+      run: sudo apt-get install clang-tidy
+    - name: Build
+      run: make compile
+    - name: Run clang-tidy
+      run: make tidy
