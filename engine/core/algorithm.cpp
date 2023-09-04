@@ -108,7 +108,7 @@ void Base::validate_algorithm_multithreaded()
     std::vector<std::thread> jobs;
     for (uint32_t thread = 0; thread < thread_num; ++thread)
     {
-        auto job = [data_cp, thread, thread_num_cp, paths, func_cp]()
+        auto job = [&data_cp, thread, &thread_num_cp, &paths, &func_cp]()
         {
             const uint32_t data_size{data_cp.size()};
             const std::string thread_str = std::to_string(thread + 1);
