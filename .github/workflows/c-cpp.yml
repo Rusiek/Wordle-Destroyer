@@ -16,24 +16,24 @@ jobs:
     - name: Build
       run: mkdir build && cmake -S . build/ && cmake --build build/
 
-  clang-tidy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Set up CMake
-      run: sudo apt-get install cmake
-    - name: Build
-      run: mkdir build && cmake -S . build/ && cmake --build build/
-    # Add clang-tidy in the future
+  # clang-tidy:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - name: Set up CMake
+  #     run: sudo apt-get install cmake
+  #   - name: Build
+  #     run: mkdir build && cmake -S . build/ && cmake --build build/
+  #   # Add clang-tidy in the future
     
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Set up CMake
-      run: sudo apt-get install cmake
-    - name: Build
-      run: mkdir build && cmake -S . build/ && cmake --build build/
-    # Add tests in the future
+  # test:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - name: Set up CMake
+  #     run: sudo apt-get install cmake
+  #   - name: Build
+  #     run: mkdir build && cmake -S . build/ && cmake --build build/
+  #   # Add tests in the future
