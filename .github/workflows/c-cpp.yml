@@ -14,4 +14,17 @@ jobs:
     - name: Set up CMake
       run: sudo apt-get install cmake
     - name: Build
-      run: mkdir build && cmake -S . build/
+      run: mkdir build && cmake -S . build/ && cmake --build build/
+
+  clang-tidy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up CMake
+      run: sudo apt-get install cmake
+    - name: Set up clang-tidy
+      run: sudo apt-get install clang-tidy
+    - name: Build
+      run: mkdir build && cmake -S . build/ && cmake --build build/
+    - name: Run clang-tidy
+      run: cmake --build build/ --target clang-tidy
