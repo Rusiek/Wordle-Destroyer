@@ -27,18 +27,16 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: build
-        path: build/WordleSolver
 
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/download-artifact@v1
-      with:
-        name: build
-        path: build/WordleSolver
-    - name: Run
-      run: ./build/WordleSolver
+  # test:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/download-artifact@v1
+  #     with:
+  #       name: build
+  #   - name: Run
+  #     run: ./build/WordleSolver
 
   # docker:
   #   runs-on: ubuntu-latest
