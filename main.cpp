@@ -19,7 +19,7 @@ int main() {
     end = std::chrono::high_resolution_clock::now();
     std::cout << "Time taken: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms" << std::endl;
 
-    Baseline bl_instance("validSolutions.csv", "baseline");
+    // Baseline bl_instance("validSolutions.csv", "baseline");
     // bl_instance.validate_algorithm();
     // bl_instance.validate_algorithm_multithreaded();
     return 0;

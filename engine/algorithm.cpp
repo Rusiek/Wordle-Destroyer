@@ -145,5 +145,4 @@ void Base::validate_algorithm_multithreaded()
         job.join();
     }
 }
-
 } // namespace engine
