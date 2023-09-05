@@ -8,52 +8,21 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Set up CMake
-      run: sudo apt-get install cmake
-    - name: Build
-      run: mkdir build && cmake -S . -B build/ && cmake --build build/
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  # clang-tidy:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v1
-  #   # get artifacts from build job
-  #   - uses: actions/download-artifact@v1
-  #     with:
-  #       name: build
-  #   - name: Install clang-tidy
-  #     run: sudo apt-get install clang-tidy
-  #   - name: Run clang-tidy
-  #     run: clang-tidy -p build/compile_commands.json src/*.cpp
+      - name: Install CMake
+        run: |
+          wget -O cmake-linux.sh https://github.com/Kitware/CMake/releases/download/v3.16.3/cmake-3.16.3-linux-x86_64.sh
+          chmod +x cmake-linux.sh
+          ./cmake-linux.sh --skip-license --prefix=/usr/local
+          rm cmake-linux.sh
 
-
-  # test:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/download-artifact@v1
-  #     with:
-  #       name: build
-  #   - name: Run
-  #     run: ./build/WordleSolver
-
-  # docker:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - name: Set up QEMU
-  #     uses: docker/setup-qemu-action@v2
-  #   - name: Set up Docker Buildx
-  #     uses: docker/setup-buildx-action@v2
-  #   - name: Login to Docker Hub
-  #     uses: docker/login-action@v2
-  #     with:
-  #       username: ${{ secrets.DOCKERHUB_USERNAME }}
-  #       password: ${{ secrets.DOCKERHUB_TOKEN }}
-  #   - name: Build and push
-  #     uses: docker/build-push-action@v4
-  #     with:
-  #       push: true
-  #       tags: user/app:latest
+      - name: Build
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          cmake --build .
