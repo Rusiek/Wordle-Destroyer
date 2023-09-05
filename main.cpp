@@ -5,8 +5,7 @@
 #include <chrono>
 #include <iostream>
 
-template <typename T>
-void run_algorithm(T * instance, std::string multithreading);
+void run_algorithm(engine::Base * instance, std::string multithreading);
 
 auto main(int argv, char ** argc) -> int {
     int requests = 0;
@@ -37,8 +36,7 @@ auto main(int argv, char ** argc) -> int {
     return 0;
 }
 
-template <typename T>
-void run_algorithm(T * instance, std::string multithreading)
+void run_algorithm(engine::Base * instance, std::string multithreading)
 {
     auto start = std::chrono::high_resolution_clock::now();
     if (multithreading.at(multithreading.size() - 1) == '+')
