@@ -21,3 +21,6 @@ jobs:
           mkdir build
           cmake -S . -B build
           cmake --build build/
+
+      - name: Run main
+        run: ./build/WordleSolver
