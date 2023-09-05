@@ -14,15 +14,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install CMake
-        run: |
-          wget -O cmake-linux.sh https://github.com/Kitware/CMake/releases/download/v3.16.3/cmake-3.16.3-linux-x86_64.sh
-          chmod +x cmake-linux.sh
-          ./cmake-linux.sh --skip-license --prefix=/usr/local
-          rm cmake-linux.sh
+        run: apt-get install cmake
 
       - name: Build
         run: |
           mkdir build
-          cd build
-          cmake ..
-          cmake --build .
+          cmake -S . -B build
+          cmake --build build/
