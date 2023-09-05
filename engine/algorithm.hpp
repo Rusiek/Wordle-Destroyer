@@ -31,7 +31,8 @@ public:
 
     virtual ~Base() = default;
 
-    static auto validate_ans(const std::string & ans, const std::string & sol) -> std::array<uint8_t, word_size> {
+    static auto validate_ans(const std::string & ans, const std::string & sol) -> std::array<uint8_t, word_size> 
+    {
         std::array<uint8_t, word_size> output{
             output_status::not_in_word,
             output_status::not_in_word,
@@ -77,7 +78,7 @@ public:
     virtual auto sol_function(
         const std::vector<std::string> & ans_list,
         const std::vector<std::array<uint8_t, word_size>> & ans_info,
-        std::vector<std::string> * possible_ans) -> std::string = 0;
+        std::shared_ptr<std::vector<std::string>> possible_ans) -> std::string = 0;
 
 private:
     std::string output_path{};

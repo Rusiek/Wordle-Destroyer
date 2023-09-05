@@ -61,12 +61,12 @@ void Base::validate_algorithm()
         uint32_t guesses_num{0};
         std::vector<std::string> ans_list{};
         std::vector<std::array<uint8_t, word_size>> ans_info{};
-        std::vector<std::string> possible_ans = data;
+        std::shared_ptr<std::vector<std::string>> possible_ans{std::make_unique<std::vector<std::string>>(data)};
 
         while (true) 
         {
             ++guesses_num;
-            auto guess = this->sol_function(ans_list, ans_info, &possible_ans);
+            auto guess = this->sol_function(ans_list, ans_info, possible_ans);
             ans_list.push_back(guess);
             ans_info.push_back(validate_ans(guess, word));
             if (guess == word) 
@@ -96,9 +96,9 @@ void Base::validate_algorithm_multithreaded()
     auto func_cp = [this](
         std::vector<std::string> & ans_list,
         std::vector<std::array<uint8_t, word_size>> & ans_info,
-        std::vector<std::string> & possible_ans) -> std::string
+        std::shared_ptr<std::vector<std::string>> possible_ans) -> std::string
     {
-        return sol_function(ans_list, ans_info, &possible_ans);
+        return sol_function(ans_list, ans_info, std::move(possible_ans));
     };
 
     std::vector<std::thread> jobs;
@@ -113,7 +113,7 @@ void Base::validate_algorithm_multithreaded()
                 uint32_t guesses_num{0};
                 std::vector<std::string> ans_list;
                 std::vector<std::array<uint8_t, word_size>> ans_info;
-                std::vector<std::string> possible_ans(data_cp);
+                std::shared_ptr<std::vector<std::string>> possible_ans{std::make_unique<std::vector<std::string>>(data_cp)};
                 
                 while (true) 
                 {

@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16.3)
 # set(CMAKE_AUTOMOC ON)
 # set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-project(WordleSolver C CXX)
+project(WordleSolver VERSION 1.0 LANGUAGES C CXX)
 
 add_executable(${PROJECT_NAME} 
     main.cpp
