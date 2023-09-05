@@ -8,19 +8,19 @@ on:
 
 jobs:
   build:
-      runs-on: ubuntu-latest
-      steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    runs-on: ubuntu-20.04-16core
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Install CMake
-        run: sudo apt-get install cmake
+    - name: Install CMake
+      run: sudo apt-get install cmake
 
-      - name: Build
-        run: |
-          mkdir build
-          cmake -S . -B build
-          cmake --build build/
+    - name: Build
+      run: |
+        mkdir build
+        cmake -S . -B build
+        cmake --build build/
 
-      - name: Run main
-        run: ./build/WordleSolver
+    - name: Run main
+      run: ./build/WordleSolver
