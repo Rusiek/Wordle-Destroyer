@@ -1,4 +1,6 @@
 #pragma once
+#include <utility>
+
 #include "algorithm.hpp"
 
 namespace engine
@@ -6,11 +8,11 @@ namespace engine
 class RandomAccess : public Base
 {
 public:
-    RandomAccess(std::string input_path, std::string output_path) : Base(input_path, output_path) {}
+    RandomAccess(const std::string & input_path, const std::string & output_path) : Base(input_path, output_path) {}
 
-    virtual std::string sol_function(
-        std::vector<std::string> & ans_list,
-        std::vector<std::array<uint8_t, word_size>> & ans_info,
-        std::vector<std::string> & possible_ans) override;
+    auto sol_function(
+        const std::vector<std::string> & ans_list,
+        const std::vector<std::array<uint8_t, word_size>> & ans_info,
+        std::vector<std::string> * possible_ans) -> std::string override;
 };
 } // namespace engine

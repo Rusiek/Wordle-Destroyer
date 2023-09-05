@@ -23,10 +23,15 @@ enum output_status
 class Base 
 {
 public:
-    Base(std::string input_path, std::string output_path);
+    Base(const std::string & input_path, const std::string & output_path);
+    Base(const Base &) = delete;
+    Base(Base &&) = delete;
+    auto operator=(const Base &) -> Base & = delete;
+    auto operator=(Base &&) -> Base & = delete;
+
     virtual ~Base() = default;
 
-    static std::array<uint8_t, word_size> validate_ans(const std::string ans, const std::string sol) {
+    static auto validate_ans(const std::string & ans, const std::string & sol) -> std::array<uint8_t, word_size> {
         std::array<uint8_t, word_size> output{
             output_status::not_in_word,
             output_status::not_in_word,
@@ -42,7 +47,7 @@ public:
         {
             if (ans.at(i) == sol.at(i)) 
             {
-                output[i] = output_status::correct_pos;
+                output.at(i) = output_status::correct_pos;
             }
             else 
             {
@@ -69,10 +74,10 @@ public:
 
     virtual void validate_algorithm();
     virtual void validate_algorithm_multithreaded();
-    virtual std::string sol_function(
-        std::vector<std::string> & ans_list,
-        std::vector<std::array<uint8_t, word_size>> & ans_info,
-        std::vector<std::string> & possible_ans) = 0;
+    virtual auto sol_function(
+        const std::vector<std::string> & ans_list,
+        const std::vector<std::array<uint8_t, word_size>> & ans_info,
+        std::vector<std::string> * possible_ans) -> std::string = 0;
 
 private:
     std::string output_path{};

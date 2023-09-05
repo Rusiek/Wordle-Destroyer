@@ -5,16 +5,14 @@
 #include <set>
 #include <string>
 #include <thread>
+#include <utility>
 #include <vector>
 #include "algorithm.hpp"
-#include "utils/indicators.hpp"
 
 namespace engine 
 {
 
-using namespace indicators;
-
-std::string build_path(std::string path, bool multithreaded = false, uint32_t thread_num = 0)
+auto build_path(const std::string & path, bool multithreaded = false, uint32_t thread_num = 0) -> std::string
 {
     if (multithreaded)
     {
@@ -23,7 +21,7 @@ std::string build_path(std::string path, bool multithreaded = false, uint32_t th
     return "data/" + path + "/singlethreaded/data.csv";
 }
 
-Base::Base(std::string input_path, std::string output_path) 
+Base::Base(const std::string & input_path, const std::string & output_path) 
 {
     try 
     {
@@ -57,26 +55,24 @@ void Base::validate_algorithm()
     std::ofstream file(path, std::ios::out);
     file << "word,guesses" << std::endl;
     file.close();
-    auto progress = 0.0f;
 
-    for (int32_t index = 0; index < data.size(); ++index)
+    for (auto & word : data)
     {
-        progress = 100.0f * index / data.size();
         uint32_t guesses_num{0};
-        std::vector<std::string> ans_list;
-        std::vector<std::array<uint8_t, word_size>> ans_info;
-        std::vector<std::string> possible_ans(data);
+        std::vector<std::string> ans_list{};
+        std::vector<std::array<uint8_t, word_size>> ans_info{};
+        std::vector<std::string> possible_ans = data;
 
         while (true) 
         {
             ++guesses_num;
-            auto guess = this->sol_function(ans_list, ans_info, possible_ans);
+            auto guess = this->sol_function(ans_list, ans_info, &possible_ans);
             ans_list.push_back(guess);
-            ans_info.push_back(validate_ans(guess, data.at(index)));
-            if (guess == data.at(index)) 
+            ans_info.push_back(validate_ans(guess, word));
+            if (guess == word) 
             {
                 std::ofstream file(path, std::ios::app);
-                file << data.at(index) << "," << guesses_num << std::endl;
+                file << word << "," << guesses_num << std::endl;
                 file.close();
                 break;
             }
@@ -102,7 +98,7 @@ void Base::validate_algorithm_multithreaded()
         std::vector<std::array<uint8_t, word_size>> & ans_info,
         std::vector<std::string> & possible_ans) -> std::string
     {
-        return sol_function(ans_list, ans_info, possible_ans);
+        return sol_function(ans_list, ans_info, &possible_ans);
     };
 
     std::vector<std::thread> jobs;
@@ -110,12 +106,10 @@ void Base::validate_algorithm_multithreaded()
     {
         auto job = [&data_cp, thread, &thread_num_cp, &paths, &func_cp]()
         {
-            const uint32_t data_size{data_cp.size()};
+            const uint32_t data_size{static_cast<uint32_t>(data_cp.size())};
             const std::string thread_str = std::to_string(thread + 1);
-            auto progress = 0.0f;
             for (uint32_t index = thread; index < data_size; index += thread_num_cp)
             {
-                progress = 100.0f * index / data_size;
                 uint32_t guesses_num{0};
                 std::vector<std::string> ans_list;
                 std::vector<std::array<uint8_t, word_size>> ans_info;
@@ -137,7 +131,7 @@ void Base::validate_algorithm_multithreaded()
                 }
             }
         };
-        jobs.push_back(std::thread(job));
+        jobs.emplace_back(job);
     }
 
     for (auto & job : jobs)

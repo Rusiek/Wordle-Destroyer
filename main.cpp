@@ -5,10 +5,8 @@
 #include <chrono>
 #include <iostream>
 
-using namespace engine;
-
-int main() {
-    RandomAccess ra_instance("validSolutions.csv", "randomAccess");
+auto main() -> int {
+    engine::RandomAccess ra_instance("validSolutions.csv", "randomAccess");
     auto start = std::chrono::high_resolution_clock::now();
     ra_instance.validate_algorithm();
     auto end = std::chrono::high_resolution_clock::now();
@@ -19,7 +17,7 @@ int main() {
     end = std::chrono::high_resolution_clock::now();
     std::cout << "Time taken: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms" << std::endl;
 
-    Baseline bl_instance("validSolutions.csv", "baseline");
+    engine::Baseline bl_instance("validSolutions.csv", "baseline");
     // bl_instance.validate_algorithm();
     // bl_instance.validate_algorithm_multithreaded();
     return 0;
