@@ -17,4 +17,4 @@ auto get_random_word(std::unique_ptr<std::vector<std::string>> * possible_ans) -
     (*possible_ans)->pop_back();
     return guess;
 }
-}  // namespace engine::utils
+}  // namespace engine
