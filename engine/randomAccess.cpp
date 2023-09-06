@@ -7,9 +7,6 @@ namespace engine
         const std::vector<std::array<uint8_t, word_size>> &   /*ans_info*/,
         std::unique_ptr<std::vector<std::string>> * possible_ans) -> std::string 
     {
-        
-        std::string guess = (*possible_ans)->at((*possible_ans)->size() - 1);
-        (*possible_ans)->pop_back();
-        return guess;
+        return utils::get_random_word(possible_ans);
     }
 } // namespace engine

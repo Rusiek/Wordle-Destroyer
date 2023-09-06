@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 #include "../utils.hpp"
 
-class TestUtils : public ::testing::TestWithParam<uint32_t>{};
+class TestBuildPath : public ::testing::TestWithParam<uint32_t>{};
 
-TEST(TestUtils, TestBuildPathDefault)
+TEST(TestBuildPath, TestBuildPathDefault)
 {
     const std::string path = "test";
     std::string expected = "data/test/singlethreaded/data.csv";
@@ -11,7 +11,7 @@ TEST(TestUtils, TestBuildPathDefault)
     EXPECT_EQ(expected, actual);
 }
 
-TEST_P(TestUtils, TestBuildPathMultithreaded)
+TEST_P(TestBuildPath, TestBuildPathMultithreaded)
 {
     const std::string path = "test";
     const uint32_t thread_num = GetParam();
@@ -20,4 +20,4 @@ TEST_P(TestUtils, TestBuildPathMultithreaded)
     EXPECT_EQ(expected, actual);
 }
 
-INSTANTIATE_TEST_SUITE_P(PerThread, TestUtils, ::testing::Range(static_cast<uint32_t>(0), static_cast<uint32_t>(100)));
+INSTANTIATE_TEST_SUITE_P(PerThread, TestBuildPath, ::testing::Range(static_cast<uint32_t>(0), static_cast<uint32_t>(100)));

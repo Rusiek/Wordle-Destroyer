@@ -1,4 +1,5 @@
 #include "baseline.hpp"
+#include "utils/utils.hpp"
 #include <iostream>
 
 namespace engine
@@ -8,12 +9,9 @@ namespace engine
         const std::vector<std::array<uint8_t, word_size>> & ans_info,
         std::unique_ptr<std::vector<std::string>> * possible_ans) -> std::string
     {
-        std::cout << (*possible_ans)->size() << std::endl;
         if (ans_list.empty())
         {
-            std::string guess = (*possible_ans)->at((*possible_ans)->size() - 1);
-            (*possible_ans)->pop_back();
-            return guess;
+            return utils::get_random_word(possible_ans);
         }
 
         std::vector<std::string> new_possible_ans;
