@@ -52,7 +52,8 @@ target_link_libraries(${PROJECT_NAME} Threads::Threads)
 enable_testing()
 
 add_executable(tests
-    engine/utils/tst/testUtils.cpp
+    engine/utils/tst/testBuildPath.cpp
+    engine/utils/tst/testGetRandomWord.cpp
     engine/utils/utils.cpp
 )
 target_link_libraries(tests GTest::gtest_main)
