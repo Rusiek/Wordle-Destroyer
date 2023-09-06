@@ -1,6 +1,8 @@
 #include "utils.hpp"
 
-namespace engine::utils
+namespace engine
+{
+namespace utils
 {
 auto build_path(const std::string & path, bool multithreaded, uint32_t thread_num) -> std::string
 {
@@ -10,4 +12,5 @@ auto build_path(const std::string & path, bool multithreaded, uint32_t thread_nu
     }
     return "data/" + path + "/singlethreaded/data.csv";
 }
-} // namespace engine::utils
+} // namespace utils
+} // namespace engine
