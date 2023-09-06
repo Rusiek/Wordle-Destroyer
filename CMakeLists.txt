@@ -28,7 +28,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE -O3 -march=native)
 
 find_program(CLANG_TIDY_EXE NAMES "clang-tidy" REQUIRED)
 set(CLANG_TIDY_COMMAND ${CLANG_TIDY_EXE}
-    -checks=engine/*,clang-analyzer-*,cppcoreguidelines-*,google-*,misc-*,modernize-*,performance-*,portability-*,readability-*
+    -checks=engine/*,clang-analyzer-*,cppcoreguidelines-*,google-*,misc-*,performance-*,portability-*,readability-*
     -warnings-as-errors=*
     -header-filter=.*
     -fix

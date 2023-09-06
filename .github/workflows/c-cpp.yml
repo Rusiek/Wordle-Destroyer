@@ -22,8 +22,7 @@ jobs:
         cmake -S . -B build
         cmake --build build/
     - name: Run tests
-      run: |
-        ./build/tests
+      run: ./build/tests
 
   # test:
   #   runs-on: ubuntu-latest #22.04-16core
