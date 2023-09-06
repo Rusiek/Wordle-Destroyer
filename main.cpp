@@ -29,9 +29,6 @@ auto main(int argv, char ** argc) -> int {
             std::cout << query << " query is invalid" << std::endl;
         }
     }
-    // engine::Baseline bl_instance("validSolutions.csv", "baseline");
-    // bl_instance.validate_algorithm();
-    // bl_instance.validate_algorithm_multithreaded();
 
     return 0;
 }
