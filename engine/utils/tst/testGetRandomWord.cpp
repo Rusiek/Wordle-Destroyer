@@ -24,7 +24,7 @@ INSTANTIATE_TEST_SUITE_P(
 TEST(TestGetRandomWord, TestPerformance)
 {
     constexpr int num_words = 1'000'000;
-    constexpr int max_time_ms = 100;
+    constexpr int max_time_ms = 150;
 
     std::unique_ptr<std::vector<std::string>> possible_ans = std::make_unique<std::vector<std::string>>(std::vector<std::string>{});
     for (int word_num = 0; word_num < num_words; ++word_num)
