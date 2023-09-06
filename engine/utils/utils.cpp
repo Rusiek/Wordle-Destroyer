@@ -1,6 +1,8 @@
 #include "utils.hpp"
 
-namespace engine::utils
+namespace engine
+{
+namespace utils
 {
 auto build_path(const std::string & path, bool multithreaded, uint32_t thread_num) -> std::string
 {
@@ -17,4 +19,5 @@ auto get_random_word(std::unique_ptr<std::vector<std::string>> * possible_ans) -
     (*possible_ans)->pop_back();
     return guess;
 }
+}  // namespace utils
 }  // namespace engine
