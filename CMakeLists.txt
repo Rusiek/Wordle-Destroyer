@@ -19,7 +19,6 @@ add_executable(${PROJECT_NAME}
     engine/algorithm.cpp
     engine/baseline.cpp
     engine/randomAccess.cpp
-    engine/utils/utils.cpp
 )
 
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
@@ -51,9 +50,28 @@ target_link_libraries(${PROJECT_NAME} Threads::Threads)
 
 enable_testing()
 
-add_executable(tests
-    engine/utils/tst/testBuildPath.cpp
-    engine/utils/tst/testGetRandomWord.cpp
-    engine/utils/utils.cpp
+include(GoogleTest)
+
+add_executable(testBuildPath engine/utils/tst/testBuildPath.cpp)
+target_link_libraries(testBuildPath GTest::gtest_main)
+gtest_discover_tests(testBuildPath)
+
+add_executable(testGetRandomWord engine/utils/tst/testGetRandomWord.cpp)
+target_link_libraries(testGetRandomWord GTest::gtest_main)
+gtest_discover_tests(testGetRandomWord)
+
+add_executable(testBaseline 
+    engine/tst/testBaseline.cpp
+    engine/baseline.cpp
+    engine/algorithm.cpp
 )
-target_link_libraries(tests GTest::gtest_main)
+target_link_libraries(testBaseline GTest::gtest_main)
+gtest_discover_tests(testBaseline)
+
+add_executable(testAlgorithm
+    engine/tst/testAlgorithm.cpp
+    engine/baseline.cpp
+    engine/algorithm.cpp
+)
+target_link_libraries(testAlgorithm GTest::gtest_main)
+gtest_discover_tests(testAlgorithm)

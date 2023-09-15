@@ -14,6 +14,10 @@ namespace engine
 {
 Base::Base(const std::string & input_path, const std::string & output_path) 
 {
+    if (input_path == "test") 
+    {
+        return;
+    }
     try 
     {
         std::ifstream file(input_path);
