@@ -1,6 +1,5 @@
 #include "baseline.hpp"
 #include "utils/utils.hpp"
-#include <iostream>
 
 namespace engine
 {

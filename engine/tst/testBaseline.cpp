@@ -6,7 +6,7 @@
 class TestBaseline : public ::testing::Test
 {
 public:
-    static const engine::Baseline instance;
+    static const engine::Baseline instance_s;
 };
 
 TEST_F(TestBaseline, TestGetAllOkWords1)
@@ -22,7 +22,7 @@ TEST_F(TestBaseline, TestGetAllOkWords1)
     const std::vector<std::string> dataset{"abcde", "xyztq", "makao"};
     std::unique_ptr<std::vector<std::string>> possible_ans{std::make_unique<std::vector<std::string>>(dataset)};
 
-    const auto result = TestBaseline::instance.get_all_ok_words(ans_list, ans_info, &possible_ans);
+    const auto result = TestBaseline::instance_s.get_all_ok_words(ans_list, ans_info, &possible_ans);
     EXPECT_EQ(result.size(), 1);
     EXPECT_EQ(result.at(0), "xyztq");
 }
@@ -40,7 +40,7 @@ TEST_F(TestBaseline, TestGetAllOkWords2)
     const std::vector<std::string> dataset{"abcde", "xxxxx", "xyztq", "makao", "xqqxq", "qqqxq"};
     std::unique_ptr<std::vector<std::string>> possible_ans{std::make_unique<std::vector<std::string>>(dataset)};
 
-    const auto result = TestBaseline::instance.get_all_ok_words(ans_list, ans_info, &possible_ans);
+    const auto result = TestBaseline::instance_s.get_all_ok_words(ans_list, ans_info, &possible_ans);
     const std::vector<std::string> expected{"xxxxx", "xqqxq"};
     EXPECT_EQ(result.size(), expected.size());
     EXPECT_EQ(result, expected);
@@ -65,7 +65,7 @@ TEST_F(TestBaseline, TestGetAllOkWords3)
     const std::vector<std::string> dataset{"abbab", "bbbab", "abbbb", "xxxxx", "qbbab", "azzaa", "aaaaa"};
     std::unique_ptr<std::vector<std::string>> possible_ans{std::make_unique<std::vector<std::string>>(dataset)};
 
-    const auto result = TestBaseline::instance.get_all_ok_words(ans_list, ans_info, &possible_ans);
+    const auto result = TestBaseline::instance_s.get_all_ok_words(ans_list, ans_info, &possible_ans);
     const std::vector<std::string> expected{"abbab", "azzaa", "aaaaa"};
     EXPECT_EQ(result.size(), expected.size());
     EXPECT_EQ(result, expected);

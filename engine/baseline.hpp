@@ -9,6 +9,12 @@ class Baseline : public Base
 {
 public:
     Baseline(const std::string & input_path, const std::string & output_path) : Base(input_path, output_path) {}
+    Baseline(const Baseline &) = delete;
+    Baseline(Baseline &&) = delete;
+    auto operator=(const Baseline &) -> Baseline & = delete;
+    auto operator=(Baseline &&) -> Baseline & = delete;
+
+    virtual ~Baseline() = default;
 
     auto sol_function(
         const std::vector<std::string> & ans_list,
