@@ -19,6 +19,7 @@ add_executable(${PROJECT_NAME}
     engine/ansReduction.cpp
     engine/algorithm.cpp
     engine/baseline.cpp
+    engine/entropy.cpp
     engine/randomAccess.cpp
 )
 

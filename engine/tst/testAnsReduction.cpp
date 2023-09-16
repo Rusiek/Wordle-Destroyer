@@ -22,9 +22,9 @@ TEST_F(TestAnsReduction, TestReduceAnswers1)
     const std::vector<std::string> dataset{"abcde", "xyztq", "makao"};
     std::unique_ptr<std::vector<std::string>> possible_ans{std::make_unique<std::vector<std::string>>(dataset)};
 
-    const auto result = TestAnsReduction::instance_s.reduce_answers(ans_list, ans_info, &possible_ans);
-    EXPECT_EQ(result.size(), 1);
-    EXPECT_EQ(result.at(0), "xyztq");
+    TestAnsReduction::instance_s.reduce_answers(ans_list, ans_info, &possible_ans);
+    EXPECT_EQ(possible_ans->size(), 1);
+    EXPECT_EQ(possible_ans->at(0), "xyztq");
 }
 
 TEST_F(TestAnsReduction, TestReduceAnswers2)
@@ -40,10 +40,13 @@ TEST_F(TestAnsReduction, TestReduceAnswers2)
     const std::vector<std::string> dataset{"abcde", "xxxxx", "xyztq", "makao", "xqqxq", "qqqxq", "xaaxb", "xaaxx"};
     std::unique_ptr<std::vector<std::string>> possible_ans{std::make_unique<std::vector<std::string>>(dataset)};
 
-    const auto result = TestAnsReduction::instance_s.reduce_answers(ans_list, ans_info, &possible_ans);
+    TestAnsReduction::instance_s.reduce_answers(ans_list, ans_info, &possible_ans);
     const std::vector<std::string> expected{"xxxxx", "xaaxb", "xaaxx"};
-    EXPECT_EQ(result.size(), expected.size());
-    EXPECT_EQ(result, expected);
+    EXPECT_EQ(possible_ans->size(), expected.size());
+    for (uint32_t index = 0; index < expected.size(); ++index)
+    {
+        EXPECT_EQ(possible_ans->at(index), expected.at(index));
+    }
 }
 
 TEST_F(TestAnsReduction, TestReduceAnswers3)
@@ -65,10 +68,13 @@ TEST_F(TestAnsReduction, TestReduceAnswers3)
     const std::vector<std::string> dataset{"abbab", "bbbab", "abbbb", "xxxxx", "qbbab", "azzaa", "aaaaa", "atqax"};
     std::unique_ptr<std::vector<std::string>> possible_ans{std::make_unique<std::vector<std::string>>(dataset)};
 
-    const auto result = TestAnsReduction::instance_s.reduce_answers(ans_list, ans_info, &possible_ans);
+    TestAnsReduction::instance_s.reduce_answers(ans_list, ans_info, &possible_ans);
     const std::vector<std::string> expected{"abbab", "atqax"};
-    EXPECT_EQ(result.size(), expected.size());
-    EXPECT_EQ(result, expected);
+    EXPECT_EQ(possible_ans->size(), expected.size());
+    for (uint32_t index = 0; index < expected.size(); ++index)
+    {
+        EXPECT_EQ(possible_ans->at(index), expected.at(index));
+    }
 }
 
 TEST_F(TestAnsReduction, TestSolFunction1)

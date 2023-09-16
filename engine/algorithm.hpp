@@ -3,17 +3,14 @@
 #include <array>
 #include <cstdint>
 #include <iomanip>
-#include <iostream>
 #include <memory>
 #include <sstream>
 #include <string>
-#include <thread>
 #include <vector>
+#include "utils/utils.hpp"
 
 namespace engine 
 {
-static constexpr uint8_t word_size{5};
-static const uint32_t thread_num{std::thread::hardware_concurrency() - 1};
 enum output_status 
 { 
     correct_pos = 0, 

@@ -13,9 +13,7 @@ auto AnsReduction::sol_function(
         return utils::get_random_word(possible_ans);
     }
 
-    std::vector<std::string> new_possible_ans = reduce_answers(ans_list, ans_info, possible_ans);
-
-    *possible_ans = std::make_unique<std::vector<std::string>>(new_possible_ans);
+    reduce_answers(ans_list, ans_info, possible_ans);
     return utils::get_random_word(possible_ans);
 }
 } // namespace engine

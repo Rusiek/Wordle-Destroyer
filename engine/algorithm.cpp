@@ -2,6 +2,7 @@
 #include <array>
 #include <cstdint>
 #include <fstream>
+#include <iostream>
 #include <set>
 #include <string>
 #include <thread>

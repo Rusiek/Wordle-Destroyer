@@ -21,11 +21,16 @@ public:
         const std::vector<std::array<uint8_t, word_size>> & ans_info,
         std::unique_ptr<std::vector<std::string>> * possible_ans) -> std::string override;
 
-    static std::vector<std::string> reduce_answers(
+    static void reduce_answers(
         const std::vector<std::string> & ans_list,
         const std::vector<std::array<uint8_t, word_size>> & ans_info,
         std::unique_ptr<std::vector<std::string>> * possible_ans)
     {
+        if (ans_list.empty())
+        {
+            return;
+        }
+        
         std::vector<std::string> new_possible_ans;
 
         for (const auto & word : **possible_ans)
@@ -46,7 +51,7 @@ public:
             }
         }
 
-        return new_possible_ans;
+        *possible_ans = std::make_unique<std::vector<std::string>>(new_possible_ans);
     }
 };
 } // namespace engine

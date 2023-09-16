@@ -1,5 +1,6 @@
 #include "engine/ansReduction.hpp"
 #include "engine/algorithm.hpp"
+#include "engine/entropy.hpp"
 #include "engine/randomAccess.hpp"
 #include "engine/baseline.hpp"
 #include <string>
@@ -29,6 +30,11 @@ auto main(int argv, char ** argc) -> int {
         {
             engine::AnsReduction red_instance("validSolutions.csv", "ansReduction");
             run_algorithm(&red_instance, query);
+        }
+        else if (query == "en" || query == "en+")
+        {
+            engine::Entropy en_instance("validSolutions.csv", "entropy");
+            run_algorithm(&en_instance, query);
         }
         else
         {
