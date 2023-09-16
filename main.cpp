@@ -1,3 +1,4 @@
+#include "engine/ansReduction.hpp"
 #include "engine/algorithm.hpp"
 #include "engine/randomAccess.hpp"
 #include "engine/baseline.hpp"
@@ -23,6 +24,11 @@ auto main(int argv, char ** argc) -> int {
         {
             engine::Baseline bl_instance("validSolutions.csv", "baseline");
             run_algorithm(&bl_instance, query);
+        }
+        else if (query == "red" || query == "red+")
+        {
+            engine::AnsReduction red_instance("validSolutions.csv", "ansReduction");
+            run_algorithm(&red_instance, query);
         }
         else
         {

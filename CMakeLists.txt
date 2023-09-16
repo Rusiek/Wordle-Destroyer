@@ -16,6 +16,7 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(${PROJECT_NAME} 
     main.cpp
+    engine/ansReduction.cpp
     engine/algorithm.cpp
     engine/baseline.cpp
     engine/randomAccess.cpp
@@ -54,8 +55,10 @@ include(GoogleTest)
 add_executable(testUT
     engine/utils/tst/testBuildPath.cpp
     engine/utils/tst/testGetRandomWord.cpp
-    engine/tst/testBaseline.cpp
+    engine/tst/testAnsReduction.cpp
     engine/tst/testAlgorithm.cpp
+    engine/tst/testBaseline.cpp
+    engine/ansReduction.cpp
     engine/baseline.cpp
     engine/algorithm.cpp
     )
