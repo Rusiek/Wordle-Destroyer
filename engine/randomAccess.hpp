@@ -9,6 +9,12 @@ class RandomAccess : public Base
 {
 public:
     RandomAccess(const std::string & input_path, const std::string & output_path) : Base(input_path, output_path) {}
+    RandomAccess(const RandomAccess &) = delete;
+    RandomAccess(RandomAccess &&) = delete;
+    auto operator=(const RandomAccess &) -> RandomAccess & = delete;
+    auto operator=(RandomAccess &&) -> RandomAccess & = delete;
+
+    ~RandomAccess() override = default;
 
     auto sol_function(
         const std::vector<std::string> & ans_list,

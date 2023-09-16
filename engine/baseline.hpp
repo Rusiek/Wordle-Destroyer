@@ -14,7 +14,7 @@ public:
     auto operator=(const Baseline &) -> Baseline & = delete;
     auto operator=(Baseline &&) -> Baseline & = delete;
 
-    virtual ~Baseline() = default;
+    ~Baseline() override = default;
 
     auto sol_function(
         const std::vector<std::string> & ans_list,

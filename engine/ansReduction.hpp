@@ -14,7 +14,7 @@ public:
     auto operator=(const AnsReduction &) -> AnsReduction & = delete;
     auto operator=(AnsReduction &&) -> AnsReduction & = delete;
 
-    virtual ~AnsReduction() = default;
+    ~AnsReduction() override = default;
 
     auto sol_function(
         const std::vector<std::string> & ans_list,
