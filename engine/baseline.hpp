@@ -27,7 +27,7 @@ public:
             bool add_word = true;
             for (uint32_t index = 0; index < word_size; ++index)
             {
-                if ((ans_info.at(ans_info.size() - 1).at(index) == output_status::correct_pos) && (ans_list.at(ans_list.size() - 1) != word))
+                if ((ans_info.at(ans_info.size() - 1).at(index) == output_status::correct_pos) && word.at(index) != ans_list.at(ans_list.size() - 1).at(index))
                 {
                     add_word = false;
                     break;
