@@ -39,7 +39,9 @@ inline uint8_t array_to_uint8_t(const std::array<uint8_t, engine::word_size> & a
     return output;
 }
 
-inline double find_entropy(const std::array<std::vector<std::string>, engine::categories> & entropy_info)
+inline double find_entropy(
+    const std::array<std::vector<std::string>, engine::categories> & entropy_info,
+    std::unique_ptr<std::vector<std::string>> * possible_ans)
 {
     double entropy = 0;
     for (const auto & category : entropy_info)
@@ -48,7 +50,7 @@ inline double find_entropy(const std::array<std::vector<std::string>, engine::ca
         {
             continue;
         }
-        double probability = static_cast<double>(category.size()) / static_cast<double>(engine::categories);
+        double probability = static_cast<double>(category.size()) / (*possible_ans)->size();
         entropy += probability * std::log2(probability);
     }
     return -entropy;
