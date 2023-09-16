@@ -50,7 +50,7 @@ inline double find_entropy(
         {
             continue;
         }
-        double probability = static_cast<double>(category.size()) / (*possible_ans)->size();
+        double probability = static_cast<double>(category.size()) / static_cast<double>((*possible_ans)->size());
         entropy += probability * std::log2(probability);
     }
     return -entropy;
