@@ -77,10 +77,10 @@ TEST_F(TestAnsReduction, TestReduceAnswers3)
     }
 }
 
-TEST_F(TestAnsReduction, TestSolFunction1)
+TEST_F(TestAnsReduction, TestSolFunction1a)
 {
     const std::string test_path = "test";
-    engine::AnsReduction instance(test_path, test_path);
+    engine::AnsReduction instance(test_path, test_path, "makao");
 
     const std::vector<std::string> ans_list{};
     const std::vector<std::array<uint8_t, engine::word_size>> ans_info{};
@@ -92,10 +92,25 @@ TEST_F(TestAnsReduction, TestSolFunction1)
     EXPECT_EQ(possible_ans->size(), dataset.size() - 1);
 }
 
+TEST_F(TestAnsReduction, TestSolFunction1b)
+{
+    const std::string test_path = "test";
+    engine::AnsReduction instance(test_path, test_path, "abcde");
+
+    const std::vector<std::string> ans_list{};
+    const std::vector<std::array<uint8_t, engine::word_size>> ans_info{};
+    const std::vector<std::string> dataset{"abcde", "xyztq", "makao"};
+    std::unique_ptr<std::vector<std::string>> possible_ans{std::make_unique<std::vector<std::string>>(dataset)};
+
+    const auto result = instance.sol_function(ans_list, ans_info, &possible_ans);
+    EXPECT_EQ(result, "abcde");
+    EXPECT_EQ(possible_ans->size(), dataset.size() - 1);
+}
+
 TEST_F(TestAnsReduction, TestSolFunction2)
 {
     const std::string test_path = "test";
-    engine::AnsReduction instance(test_path, test_path);
+    engine::AnsReduction instance(test_path, test_path, test_path);
 
     const std::vector<std::string> ans_list{"xxxxx"};
     const std::array<uint8_t, engine::word_size> ans_info_1{
@@ -116,7 +131,7 @@ TEST_F(TestAnsReduction, TestSolFunction2)
 TEST_F(TestAnsReduction, TestSolFunction3)
 {
     const std::string test_path = "test";
-    engine::AnsReduction instance(test_path, test_path);
+    engine::AnsReduction instance(test_path, test_path, test_path);
 
     const std::vector<std::string> ans_list{"xxxxx"};
     const std::array<uint8_t, engine::word_size> ans_info_1{
@@ -137,7 +152,7 @@ TEST_F(TestAnsReduction, TestSolFunction3)
 TEST_F(TestAnsReduction, TestSolFunction4)
 {
     const std::string test_path = "test";
-    engine::AnsReduction instance(test_path, test_path);
+    engine::AnsReduction instance(test_path, test_path, "xxxxx");
 
     std::vector<std::string> ans_list{};
     std::vector<std::array<uint8_t, engine::word_size>> ans_info{};
@@ -184,7 +199,7 @@ TEST_F(TestAnsReduction, TestSolFunction4)
 TEST_F(TestAnsReduction, TestSolFunction5)
 {
     const std::string test_path = "test";
-    engine::AnsReduction instance(test_path, test_path);
+    engine::AnsReduction instance(test_path, test_path, "crown");
 
     std::vector<std::string> ans_list{};
     std::vector<std::array<uint8_t, engine::word_size>> ans_info{};

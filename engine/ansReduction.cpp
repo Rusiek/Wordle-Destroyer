@@ -10,7 +10,8 @@ auto AnsReduction::sol_function(
 {
     if (ans_list.empty())
     {
-        return utils::get_random_word(possible_ans);
+        (*possible_ans)->erase(std::remove((*possible_ans)->begin(), (*possible_ans)->end(), get_starting_word()), (*possible_ans)->end());
+        return get_starting_word();
     }
 
     reduce_answers(ans_list, ans_info, possible_ans);

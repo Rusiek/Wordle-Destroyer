@@ -21,7 +21,10 @@ enum output_status
 class Base 
 {
 public:
-    Base(const std::string & input_path, const std::string & output_path);
+    Base(
+        const std::string & input_path,
+        const std::string & output_path,
+        const std::string & starting_word);
     Base(const Base &) = delete;
     Base(Base &&) = delete;
     auto operator=(const Base &) -> Base & = delete;
@@ -78,7 +81,13 @@ public:
         const std::vector<std::array<uint8_t, word_size>> & ans_info,
         std::unique_ptr<std::vector<std::string>> * possible_ans) -> std::string = 0;
 
+    virtual auto get_starting_word() const -> std::string
+    {
+        return starting_word;
+    }
+
 private:
+    std::string starting_word{};
     std::string output_path{};
     std::vector<std::string> data;
 };

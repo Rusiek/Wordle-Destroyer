@@ -8,7 +8,10 @@ namespace engine
 class Baseline : public Base
 {
 public:
-    Baseline(const std::string & input_path, const std::string & output_path) : Base(input_path, output_path) {}
+    Baseline(
+        const std::string & input_path,
+        const std::string & output_path,
+        const std::string & starting_word) : Base(input_path, output_path, starting_word) {}
     Baseline(const Baseline &) = delete;
     Baseline(Baseline &&) = delete;
     auto operator=(const Baseline &) -> Baseline & = delete;

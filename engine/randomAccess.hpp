@@ -8,7 +8,10 @@ namespace engine
 class RandomAccess : public Base
 {
 public:
-    RandomAccess(const std::string & input_path, const std::string & output_path) : Base(input_path, output_path) {}
+    RandomAccess(
+        const std::string & input_path,
+        const std::string & output_path,
+        const std::string & starting_word) : Base(input_path, output_path, starting_word) {}
     RandomAccess(const RandomAccess &) = delete;
     RandomAccess(RandomAccess &&) = delete;
     auto operator=(const RandomAccess &) -> RandomAccess & = delete;

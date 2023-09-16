@@ -13,10 +13,14 @@
 
 namespace engine 
 {
-Base::Base(const std::string & input_path, const std::string & output_path) 
+Base::Base(
+    const std::string & input_path,
+    const std::string & output_path,
+    const std::string & starting_word) 
 {
     if (input_path == "test") 
     {
+        this->starting_word = starting_word;
         return;
     }
     try 
@@ -42,6 +46,7 @@ Base::Base(const std::string & input_path, const std::string & output_path)
     }
     file.close();
 
+    this->starting_word = starting_word;
     this->output_path = output_path;
 }
 

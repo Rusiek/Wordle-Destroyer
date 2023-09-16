@@ -8,7 +8,10 @@ namespace engine
 class AnsReduction : public Base
 {
 public:
-    AnsReduction(const std::string & input_path, const std::string & output_path) : Base(input_path, output_path) {}
+    AnsReduction(
+        const std::string & input_path,
+        const std::string & output_path,
+        const std::string & starting_word) : Base(input_path, output_path, starting_word) {}
     AnsReduction(const AnsReduction &) = delete;
     AnsReduction(AnsReduction &&) = delete;
     auto operator=(const AnsReduction &) -> AnsReduction & = delete;

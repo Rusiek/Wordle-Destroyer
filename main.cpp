@@ -12,36 +12,53 @@ void run_algorithm(engine::Base * instance, std::string multithreading);
 auto main(int argv, char ** argc) -> int {
     int requests = 0;
 
-    while (requests++ < argv - 1)
+    try
     {
-        argc = std::next(argc);
-        std::string query = *argc;
-        if (query == "ra" || query == "ra+")
-        {
-            engine::RandomAccess ra_instance("validSolutions.csv", "randomAccess");
-            run_algorithm(&ra_instance, query);
-        }
-        else if (query == "bl" || query == "bl+")
-        {
-            engine::Baseline bl_instance("validSolutions.csv", "baseline");
-            run_algorithm(&bl_instance, query);
-        }
-        else if (query == "red" || query == "red+")
-        {
-            engine::AnsReduction red_instance("validSolutions.csv", "ansReduction");
-            run_algorithm(&red_instance, query);
-        }
-        else if (query == "en" || query == "en+")
+        while (++requests < argv - 1)
         {
             argc = std::next(argc);
+            std::string query = *argc;
+
+            ++requests;
+            argc = std::next(argc);
             std::string starting_word = *argc;
-            engine::Entropy en_instance("validSolutions.csv", "entropy", starting_word);
-            run_algorithm(&en_instance, query);
+
+            if (starting_word.size() != engine::word_size)
+            {
+                std::cout << "Word '" << starting_word << "' is invalid" << std::endl;
+                continue;
+            }
+
+            if (query == "ra" || query == "ra+")
+            {
+                engine::RandomAccess ra_instance("validSolutions.csv", "randomAccess", starting_word);
+                run_algorithm(&ra_instance, query);
+            }
+            else if (query == "bl" || query == "bl+")
+            {
+                engine::Baseline bl_instance("validSolutions.csv", "baseline", starting_word);
+                run_algorithm(&bl_instance, query);
+            }
+            else if (query == "red" || query == "red+")
+            {
+                engine::AnsReduction red_instance("validSolutions.csv", "ansReduction", starting_word);
+                run_algorithm(&red_instance, query);
+            }
+            else if (query == "en" || query == "en+")
+            {
+                engine::Entropy en_instance("validSolutions.csv", "entropy", starting_word);
+                run_algorithm(&en_instance, query);
+            }
+            else
+            {
+                std::cout << query << " query is invalid" << std::endl;
+            }
         }
-        else
-        {
-            std::cout << query << " query is invalid" << std::endl;
-        }
+    }
+    catch (const std::exception & e)
+    {
+        std::cerr << e.what() << std::endl;
+        exit(EXIT_FAILURE);
     }
 
     return 0;
