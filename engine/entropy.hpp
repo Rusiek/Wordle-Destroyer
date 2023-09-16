@@ -8,10 +8,7 @@ namespace engine
 class Entropy : public AnsReduction
 {
 public:
-    Entropy(const std::string & input_path, const std::string & output_path, const std::string & starting_word = "aback") : AnsReduction(input_path, output_path)
-    {
-        this->starting_word = starting_word;
-    }
+    Entropy(const std::string & input_path, const std::string & output_path, const std::string & starting_word = "aback") : AnsReduction(input_path, output_path), starting_word(starting_word) {}
     Entropy(const Entropy &) = delete;
     Entropy(Entropy &&) = delete;
     auto operator=(const Entropy &) -> Entropy & = delete;

@@ -33,7 +33,9 @@ auto main(int argv, char ** argc) -> int {
         }
         else if (query == "en" || query == "en+")
         {
-            engine::Entropy en_instance("validSolutions.csv", "entropy");
+            argc = std::next(argc);
+            std::string starting_word = *argc;
+            engine::Entropy en_instance("validSolutions.csv", "entropy", starting_word);
             run_algorithm(&en_instance, query);
         }
         else

@@ -12,7 +12,7 @@ auto Entropy::sol_function(
 {
     if (ans_list.empty())
     {
-        return utils::get_random_word(possible_ans);
+        return get_starting_word();
     }
 
     reduce_answers(ans_list, ans_info, possible_ans);
