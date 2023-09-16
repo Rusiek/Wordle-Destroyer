@@ -49,29 +49,15 @@ find_package(Threads REQUIRED)
 target_link_libraries(${PROJECT_NAME} Threads::Threads)
 
 enable_testing()
-
 include(GoogleTest)
 
-add_executable(testBuildPath engine/utils/tst/testBuildPath.cpp)
-target_link_libraries(testBuildPath GTest::gtest_main)
-gtest_discover_tests(testBuildPath)
-
-add_executable(testGetRandomWord engine/utils/tst/testGetRandomWord.cpp)
-target_link_libraries(testGetRandomWord GTest::gtest_main)
-gtest_discover_tests(testGetRandomWord)
-
-add_executable(testBaseline 
+add_executable(testUT
+    engine/utils/tst/testBuildPath.cpp
+    engine/utils/tst/testGetRandomWord.cpp
     engine/tst/testBaseline.cpp
-    engine/baseline.cpp
-    engine/algorithm.cpp
-)
-target_link_libraries(testBaseline GTest::gtest_main)
-gtest_discover_tests(testBaseline)
-
-add_executable(testAlgorithm
     engine/tst/testAlgorithm.cpp
     engine/baseline.cpp
     engine/algorithm.cpp
-)
-target_link_libraries(testAlgorithm GTest::gtest_main)
-gtest_discover_tests(testAlgorithm)
+    )
+target_link_libraries(testUT GTest::gtest_main)
+gtest_discover_tests(testUT)
