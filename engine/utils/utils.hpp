@@ -38,22 +38,5 @@ inline uint8_t array_to_uint8_t(const std::array<uint8_t, engine::word_size> & a
     }
     return output;
 }
-
-inline double find_entropy(
-    const std::array<std::vector<std::string>, engine::categories> & entropy_info,
-    std::unique_ptr<std::vector<std::string>> * possible_ans)
-{
-    double entropy = 0;
-    for (const auto & category : entropy_info)
-    {
-        if (category.empty())
-        {
-            continue;
-        }
-        double probability = static_cast<double>(category.size()) / static_cast<double>((*possible_ans)->size());
-        entropy += probability * std::log2(probability);
-    }
-    return -entropy;
-}
 } // namespace utils
 } // namespace engine
