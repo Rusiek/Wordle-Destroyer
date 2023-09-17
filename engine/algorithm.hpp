@@ -32,6 +32,13 @@ public:
 
     virtual ~Base() = default;
 
+    static std::string get_random_word(std::unique_ptr<std::vector<std::string>> * possible_ans)
+    {
+        std::string guess = (*possible_ans)->at((*possible_ans)->size() - 1);
+        (*possible_ans)->pop_back();
+        return guess;
+    }
+
     static auto validate_ans(const std::string & ans, const std::string & sol) -> std::array<uint8_t, word_size> 
     {
         std::array<uint8_t, word_size> output{
@@ -74,17 +81,14 @@ public:
         return output;
     }
 
-    virtual void validate_algorithm();
-    virtual void validate_algorithm_multithreaded();
+    void validate_algorithm();
+    void validate_algorithm_multithreaded();
+
+    virtual auto get_starting_word(std::unique_ptr<std::vector<std::string>> * possible_ans) -> std::string;
     virtual auto sol_function(
         const std::vector<std::string> & ans_list,
         const std::vector<std::array<uint8_t, word_size>> & ans_info,
         std::unique_ptr<std::vector<std::string>> * possible_ans) -> std::string = 0;
-
-    virtual auto get_starting_word() const -> std::string
-    {
-        return starting_word;
-    }
 
 private:
     std::string starting_word{};

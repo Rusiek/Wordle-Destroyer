@@ -10,13 +10,12 @@ auto Baseline::sol_function(
 {
     if (ans_list.empty())
     {
-        (*possible_ans)->erase(std::remove((*possible_ans)->begin(), (*possible_ans)->end(), get_starting_word()), (*possible_ans)->end());
-        return get_starting_word();
+        return get_starting_word(possible_ans);
     }
 
     std::vector<std::string> new_possible_ans = get_all_ok_words(ans_list, ans_info, possible_ans);
 
     *possible_ans = std::make_unique<std::vector<std::string>>(new_possible_ans);
-    return utils::get_random_word(possible_ans);
+    return get_random_word(possible_ans);
 }
 } // namespace engine

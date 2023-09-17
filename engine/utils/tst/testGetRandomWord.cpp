@@ -1,14 +1,19 @@
 #include <chrono>
 #include <gtest/gtest.h>
 #include "../utils.hpp"
+#include "../../baseline.hpp"
 
-class TestGetRandomWord : public ::testing::TestWithParam<std::vector<std::string>>{};
+class TestGetRandomWord : public ::testing::TestWithParam<std::vector<std::string>>
+{
+public:
+    static const engine::Baseline instance_s;
+};
 
 TEST_P(TestGetRandomWord, TestCorrectness)
 {
     std::unique_ptr<std::vector<std::string>> possible_ans = std::make_unique<std::vector<std::string>>(GetParam());
     std::string expected = possible_ans->at(possible_ans->size() - 1);
-    std::string actual = engine::utils::get_random_word(&possible_ans);
+    std::string actual = instance_s.get_random_word(&possible_ans);
     EXPECT_EQ(expected, actual);
 }
 
@@ -21,7 +26,7 @@ INSTANTIATE_TEST_SUITE_P(
         std::vector<std::string>{"aback", "abase", "abate", "abbey", "abbot", "abhor", "abide", "abled"}
     ));
 
-TEST(TestGetRandomWord, TestPerformance)
+TEST_F(TestGetRandomWord, TestPerformance)
 {
     constexpr int num_words = 1'000'000;
     constexpr int max_time_ms = 150;
@@ -35,7 +40,7 @@ TEST(TestGetRandomWord, TestPerformance)
     auto timer_start = std::chrono::high_resolution_clock::now();
     for (int word_num = 0; word_num < num_words; ++word_num)
     {
-        engine::utils::get_random_word(&possible_ans);
+        instance_s.get_random_word(&possible_ans);
     }
     auto timer_end = std::chrono::high_resolution_clock::now();
     auto total_time = std::chrono::duration_cast<std::chrono::milliseconds>(timer_end - timer_start).count();

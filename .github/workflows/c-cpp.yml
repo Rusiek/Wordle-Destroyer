@@ -21,3 +21,14 @@ jobs:
 
     - name: Run tests
       run: cd build && ctest
+
+    - name: Run executable
+      run: |
+        cd build
+        ./WordleSolver \
+          ra cloud \
+          ra+ cloud \
+          bl cloud \
+          red cloud \
+          en cloud \
+

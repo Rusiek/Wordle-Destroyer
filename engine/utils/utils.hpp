@@ -21,13 +21,6 @@ inline std::string build_path(const std::string & path, bool multithreaded = fal
     return "data/" + path + "/singlethreaded/data.csv";
 }
 
-inline std::string get_random_word(std::unique_ptr<std::vector<std::string>> * possible_ans)
-{
-    std::string guess = (*possible_ans)->at((*possible_ans)->size() - 1);
-    (*possible_ans)->pop_back();
-    return guess;
-}
-
 constexpr std::array<uint8_t, engine::word_size> three_pow{1, 3, 9, 27, 81};
 inline uint8_t array_to_uint8_t(const std::array<uint8_t, engine::word_size> & arr)
 {

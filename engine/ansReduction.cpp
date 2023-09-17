@@ -10,11 +10,10 @@ auto AnsReduction::sol_function(
 {
     if (ans_list.empty())
     {
-        (*possible_ans)->erase(std::remove((*possible_ans)->begin(), (*possible_ans)->end(), get_starting_word()), (*possible_ans)->end());
-        return get_starting_word();
+        return get_starting_word(possible_ans);
     }
 
     reduce_answers(ans_list, ans_info, possible_ans);
-    return utils::get_random_word(possible_ans);
+    return get_random_word(possible_ans);
 }
 } // namespace engine

@@ -140,4 +140,10 @@ void Base::validate_algorithm_multithreaded()
         job.join();
     }
 }
+
+auto Base::get_starting_word(std::unique_ptr<std::vector<std::string>> * possible_ans) -> std::string
+{
+    (*possible_ans)->erase(std::remove((*possible_ans)->begin(), (*possible_ans)->end(), starting_word), (*possible_ans)->end());
+    return starting_word;
+}
 } // namespace engine
