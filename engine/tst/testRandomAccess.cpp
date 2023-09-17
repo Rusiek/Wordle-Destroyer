@@ -1,7 +1,6 @@
 #include <chrono>
 #include <gtest/gtest.h>
-#include "../utils.hpp"
-#include "../../baseline.hpp"
+#include "../baseline.hpp"
 
 class TestGetRandomWord : public ::testing::TestWithParam<std::vector<std::string>>
 {

@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 #include "../utils.hpp"
 
-class TestBuildPath : public ::testing::TestWithParam<uint32_t>{};
+class TestBuildPath : public ::testing::Test{};
 
-TEST(TestBuildPath, TestBuildPathDefault)
+TEST_F(TestBuildPath, TestBuildPathDefault)
 {
     const std::string path = "test";
     std::string expected = "data/test/singlethreaded/data.csv";
@@ -11,13 +11,13 @@ TEST(TestBuildPath, TestBuildPathDefault)
     EXPECT_EQ(expected, actual);
 }
 
-TEST_P(TestBuildPath, TestBuildPathMultithreaded)
+TEST_F(TestBuildPath, TestBuildPathMultithreaded)
 {
     const std::string path = "test";
-    const uint32_t thread_num = GetParam();
-    std::string expected = "data/test/multithreaded/data_" + std::string(2 - std::to_string(thread_num).size(), '0') + std::to_string(thread_num) + ".csv";
-    std::string actual = engine::utils::build_path(path, true, thread_num);
-    EXPECT_EQ(expected, actual);
+    for (uint8_t thread_num = 0; thread_num < 100; ++thread_num)
+    {
+        std::string expected = "data/test/multithreaded/data_" + std::string(2 - std::to_string(thread_num).size(), '0') + std::to_string(thread_num) + ".csv";
+        std::string actual = engine::utils::build_path(path, true, thread_num);
+        EXPECT_EQ(expected, actual);
+    }
 }
-
-INSTANTIATE_TEST_SUITE_P(PerThread, TestBuildPath, ::testing::Range(static_cast<uint32_t>(0), static_cast<uint32_t>(100)));
